@@ -1,0 +1,315 @@
+Section I									(30 marks)
+==========================================================================================
+Que 1. Create table DEPT with the following structure:-
+DEPTNO	int
+DNAME	varchar(15)
+LOC	varchar(10)
+
+Insert the following rows into the DEPT table:-
+10	ACCOUNTING	NAINITAL
+20	RESEARCH	DEHRADUN
+30	SALES		CHENNAI
+40	OPERATIONS	BILASPUR
+-----------------------------------------
+mysql> create table DEPT
+    -> (
+    -> DEPTNO int,
+    -> DNAME varchar(15),
+    -> LOC varchar(10)
+    -> );
+Query OK, 0 rows affected (0.66 sec)
+
+mysql> insert into DEPT(DEPTNO, DNAME, LOC) values
+    -> (10, 'ACCOUNTING', 'NAINITAL'),
+    -> (20, 'RESEARCH',   'DEHRADUN'),
+    -> (30, 'SALES',      'CHENNAI'),
+    -> (40, 'OPERATIONS', 'BILASPUR');
+Query OK, 4 rows affected (0.17 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from DEPT;
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NAINITAL |
+|     20 | RESEARCH   | DEHRADUN |
+|     30 | SALES      | CHENNAI  |
+|     40 | OPERATIONS | BILASPUR |
++--------+------------+----------+
+4 rows in set (0.00 sec)
+============================================================================================
+Que 2. Create table EMP with the following structure:-
+EMPNO		int
+ENAME		varchar(10)
+JOB		varchar(9)
+HIREDATE	date
+SAL		float
+COMM		float
+DEPTNO		int
+
+Insert the following rows into the EMP table:-
+7839	KAILASH		MANAGER		1991-11-17	5000	NULL	10
+7698	BELA		CLERK		1981-05-01	2850	NULL	30
+7782	CHETAN		MANAGER		1981-06-09	2450	NULL	10
+7566	JASPREET	CLERK		1981-04-02	2975	NULL	20
+7654	MAMTA		SALESMAN	1981-09-28	1250	1400	30
+7499	AMAR		SALESMAN	1981-02-20	1600	300	30 
+--------------------------------------------------------------------------
+mysql> create table EMP
+    -> (
+    -> EMPNO int,
+    -> ENAME varchar(10),
+    -> JOB varchar(9),
+    -> HIREDATE date,
+    -> SAL float,
+    -> COMM float,
+    -> DEPTNO int
+    -> );
+Query OK, 0 rows affected (0.75 sec)
+
+mysql> insert into EMP(EMPNO, ENAME, JOB, HIREDATE, SAL, COMM, DEPTNO) values
+    -> (7839, 'KAILASH',  'MANAGER',  '1991-11-17', 5000, NULL, 10),
+    -> (7698, 'BELA',     'CLERK',    '1981-05-01', 2850, NULL, 30),
+    -> (7782, 'CHETAN',   'MANAGER',  '1981-06-09', 2450, NULL, 10),
+    -> (7566, 'JASPREET', 'CLERK',    '1981-04-02', 2975, NULL, 20),
+    -> (7654, 'MAMTA',    'SALESMAN', '1981-09-28', 1250, 1400, 30),
+    -> (7499, 'AMAR',     'SALESMAN', '1981-02-20', 1600, 300,  30);
+Query OK, 6 rows affected (0.21 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from EMP;
++-------+----------+----------+------------+------+------+--------+
+| EMPNO | ENAME    | JOB      | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+----------+----------+------------+------+------+--------+
+|  7839 | KAILASH  | MANAGER  | 1991-11-17 | 5000 | NULL |     10 |
+|  7698 | BELA     | CLERK    | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CHETAN   | MANAGER  | 1981-06-09 | 2450 | NULL |     10 |
+|  7566 | JASPREET | CLERK    | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | MAMTA    | SALESMAN | 1981-09-28 | 1250 | 1400 |     30 |
+|  7499 | AMAR     | SALESMAN | 1981-02-20 | 1600 |  300 |     30 |
++-------+----------+----------+------------+------+------+--------+
+6 rows in set (0.00 sec)
+==================================================================================================
+Que 3. Display the last day of the month for every HIREDATE.
+
+mysql> select EMPNO, ENAME, JOB, HIREDATE, last_day(HIREDATE), SAL, COMM, DEPTNO from EMP;
++-------+----------+----------+------------+--------------------+------+------+--------+
+| EMPNO | ENAME    | JOB      | HIREDATE   | last_day(HIREDATE) | SAL  | COMM | DEPTNO |
++-------+----------+----------+------------+--------------------+------+------+--------+
+|  7839 | KAILASH  | MANAGER  | 1991-11-17 | 1991-11-30         | 5000 | NULL |     10 |
+|  7698 | BELA     | CLERK    | 1981-05-01 | 1981-05-31         | 2850 | NULL |     30 |
+|  7782 | CHETAN   | MANAGER  | 1981-06-09 | 1981-06-30         | 2450 | NULL |     10 |
+|  7566 | JASPREET | CLERK    | 1981-04-02 | 1981-04-30         | 2975 | NULL |     20 |
+|  7654 | MAMTA    | SALESMAN | 1981-09-28 | 1981-09-30         | 1250 | 1400 |     30 |
+|  7499 | AMAR     | SALESMAN | 1981-02-20 | 1981-02-28         | 1600 |  300 |     30 |
++-------+----------+----------+------------+--------------------+------+------+--------+
+6 rows in set (0.00 sec)
+===================================================================================================
+Que 4. Display the annual SAL for each employee.
+
+mysql> select EMPNO, ENAME, JOB, HIREDATE, SAL, SAL*12 Annual_Sal, COMM, DEPTNO from EMP;
++-------+----------+----------+------------+------+------------+------+--------+
+| EMPNO | ENAME    | JOB      | HIREDATE   | SAL  | Annual_Sal | COMM | DEPTNO |
++-------+----------+----------+------------+------+------------+------+--------+
+|  7839 | KAILASH  | MANAGER  | 1991-11-17 | 5000 |      60000 | NULL |     10 |
+|  7698 | BELA     | CLERK    | 1981-05-01 | 2850 |      34200 | NULL |     30 |
+|  7782 | CHETAN   | MANAGER  | 1981-06-09 | 2450 |      29400 | NULL |     10 |
+|  7566 | JASPREET | CLERK    | 1981-04-02 | 2975 |      35700 | NULL |     20 |
+|  7654 | MAMTA    | SALESMAN | 1981-09-28 | 1250 |      15000 | 1400 |     30 |
+|  7499 | AMAR     | SALESMAN | 1981-02-20 | 1600 |      19200 |  300 |     30 |
++-------+----------+----------+------------+------+------------+------+--------+
+6 rows in set (0.00 sec)
+===================================================================================================
+Que 5. Display the ENAME and JOB for all employees who belong to the same DEPTNO as employee ‘KING’.
+
+mysql> select ENAME, JOB from EMP
+    -> where DEPTNO =
+    -> (select DEPTNO from EMP
+    -> where ENAME = 'BELA');
++-------+----------+
+| ENAME | JOB      |
++-------+----------+
+| BELA  | CLERK    |
+| MAMTA | SALESMAN |
+| AMAR  | SALESMAN |
++-------+----------+
+3 rows in set (0.00 sec)
+======================================================================================================
+Que 6. Display the names of all employees replacing any ‘A’ with ‘a’.
+
+mysql> select replace(ENAME, 'A', 'a') from EMP;
++--------------------------+
+| replace(ENAME, 'A', 'a') |
++--------------------------+
+| KaILaSH                  |
+| BELa                     |
+| CHETaN                   |
+| JaSPREET                 |
+| MaMTa                    |
+| aMaR                     |
++--------------------------+
+6 rows in set (0.00 sec)
+==========================================================================================================
+Que 7. Display the employee name and employee number of the employees with the headings as NUMBER and NAME.
+
+mysql> select ENAME NUMBERS, EMPNO NAME from EMP;
++----------+------+
+| NUMBERS  | NAME |
++----------+------+
+| KAILASH  | 7839 |
+| BELA     | 7698 |
+| CHETAN   | 7782 |
+| JASPREET | 7566 |
+| MAMTA    | 7654 |
+| AMAR     | 7499 |
++----------+------+
+6 rows in set (0.00 sec)
+=============================================================================================================
+Que 8. Find the name of the employee who is receiving the maximum salary.
+
+mysql> select ENAME, max(SAL) from EMP;
++---------+----------+
+| ENAME   | max(SAL) |
++---------+----------+
+| KAILASH |     5000 |
++---------+----------+
+1 row in set (0.12 sec)
+=============================================================================================================
+Que 9. Display the sum of SAL for all the employees belonging to DEPTNO 10.
+
+mysql> select sum(SAL), DEPTNO from EMP
+    -> where DEPTNO = 10;
++----------+--------+
+| sum(SAL) | DEPTNO |
++----------+--------+
+|     7450 |     10 |
++----------+--------+
+1 row in set (0.10 sec)
+=============================================================================================================
+Que 10.	Display the rows where JOB column ends with the letter ‘T’.
+
+mysql> select * from EMp
+    -> where job like '%R';
++-------+---------+---------+------------+------+------+--------+
+| EMPNO | ENAME   | JOB     | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+---------+---------+------------+------+------+--------+
+|  7839 | KAILASH | MANAGER | 1991-11-17 | 5000 | NULL |     10 |
+|  7782 | CHETAN  | MANAGER | 1981-06-09 | 2450 | NULL |     10 |
++-------+---------+---------+------------+------+------+--------+
+2 rows in set (0.00 sec)
+=============================================================================================================
+Section II									                   (10 marks)
+
+Que 1. Write a stored procedure by the name of HRA_calc.  
+       The Empno, Deptno and Sal should be passed as parameters to your stored procedure.  
+       The formulae are as follows:-
+
+If deptno = 10 then HRA = 20% of sal,
+If deptno = 20 then HRA = 30% of sal,
+For all other deptnos, HRA = 10% of sal.
+
+Your stored procedure should insert the Empno, Deptno, Sal and the HRA into a suitable TEMPP output table. 
+Calling program for the stored procedure need not be written.
+
+mysql> create table TEMPP
+    -> (
+    -> Empno int,
+    -> Deptno int,
+    -> Sal float,
+    -> HRA float
+    -> );
+Query OK, 0 rows affected (0.72 sec)
+
+mysql> delimiter //
+mysql> create procedure HRA_calc(Empno int, Deptno int, Sal float )
+    -> begin
+    ->	   if Deptno = 10 then insert into TEMPP values(Empno, Deptno, Sal, Sal*0.2);
+    ->     elseif Deptno = 20 then insert into TEMPP values(Empno, Deptno, Sal, Sal*0.3);
+    ->     else
+    ->     	insert into TEMPP values(Empno, Deptno, Sal, Sal*0.1);
+    ->     end if;
+    -> end; //
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> delimiter ;
+mysql> call HRA_calc(1, 10, 1000);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> call HRA_calc(2, 20, 1000);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> call HRA_calc(3, 30, 1000);
+Query OK, 1 row affected (0.23 sec)
+
+mysql> select * from TEMPP;
++-------+--------+------+------+
+| Empno | Deptno | Sal  | HRA  |
++-------+--------+------+------+
+|     1 |     10 | 1000 |  200 |
+|     2 |     20 | 1000 |  300 |
+|     3 |     30 | 1000 |  100 |
++-------+--------+------+------+
+3 rows in set (0.00 sec)
+=============================================================================================================
+Que 2. Write a stored function by the name of Num_cube.  
+       The stored function should return the cube of a number ‘N’.  
+       The number ‘N’ should be passed to the stored function as a parameter.  
+       Calling program for the stored function need not be written.
+
+mysql> create table Cube_Num_Table
+    -> (
+    -> Num float,
+    -> Num_cube float
+    -> );
+Query OK, 0 rows affected (0.55 sec)
+
+mysql> delimiter //
+mysql> create function Num_cube(N float)
+    -> returns float
+    -> deterministic
+    -> begin
+    -> 	    return power(N, 3);
+    -> end; //
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> delimiter ;
+mysql> delimiter //
+mysql> create procedure pro_Num_cube(Num float)
+    -> begin
+    -> 	   declare Num_Cube float;
+    ->     set Num_cube = Num_cube(Num);
+    ->     insert into Cube_Num_Table values(Num, Num_cube);
+    -> end; //
+Query OK, 0 rows affected (0.27 sec)
+
+mysql> delimiter ;
+mysql> call pro_Num_cube(1);
+Query OK, 1 row affected (0.22 sec)
+
+mysql> call pro_Num_cube(2);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> call pro_Num_cube(3);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> call pro_Num_cube(4);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> call pro_Num_cube(5);
+Query OK, 1 row affected (0.20 sec)
+
+mysql> select * from Cube_Num_Table;
++------+----------+
+| Num  | Num_cube |
++------+----------+
+|    1 |        1 |
+|    2 |        8 |
+|    3 |       27 |
+|    4 |       64 |
+|    5 |      125 |
++------+----------+
+5 rows in set (0.00 sec)
+===================================================================================================
+
+
+
